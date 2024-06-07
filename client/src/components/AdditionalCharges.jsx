@@ -2,46 +2,23 @@ import React from "react";
 
 const AdditionalCharges = () => {
   return (
-    <div className="bg-white shadow-md rounded-md p-4">
-      <h3 className="text-lg font-semibold mb-4">Additional Charges</h3>
+    <div className="p-4 border rounded shadow">
+      <h2 className="font-semibold mb-4">Additional Charges</h2>
       <div className="mb-2">
-        <label
-          htmlFor="collisionDamageWaiver"
-          className="block font-medium mb-1"
-        >
-          Collision Damage Waiver:
+        <input type="checkbox" id="collision-damage-waiver" className="mr-2" />
+        <label htmlFor="collision-damage-waiver">
+          Collision Damage Waiver ($9.00)
         </label>
-        <input
-          type="number"
-          id="collisionDamageWaiver"
-          step="0.01"
-          defaultValue="9.00"
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
-        />
       </div>
       <div className="mb-2">
-        <label htmlFor="liabilityInsurance" className="block font-medium mb-1">
-          Liability Insurance:
+        <input type="checkbox" id="liability-insurance" className="mr-2" />
+        <label htmlFor="liability-insurance">
+          Liability Insurance ($15.00)
         </label>
-        <input
-          type="number"
-          id="liabilityInsurance"
-          step="0.01"
-          defaultValue="10.00"
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
-        />
       </div>
       <div className="mb-2">
-        <label htmlFor="rentalTax" className="block font-medium mb-1">
-          Rental Tax:
-        </label>
-        <input
-          type="number"
-          id="rentalTax"
-          step="0.01"
-          defaultValue="13.5"
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
-        />
+        <input type="checkbox" id="rental-tax" className="mr-2" />
+        <label htmlFor="rental-tax">Rental Tax (11.5%)</label>
       </div>
     </div>
   );

@@ -1,62 +1,83 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ReservationDetails = () => {
+  const [pickupDate, setPickupDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+  const [duration, setDuration] = useState("");
+
+  const handlePickupDateChange = (e) => {
+    const value = e.target.value;
+    setPickupDate(value);
+    calculateDuration(value, returnDate);
+  };
+
+  const handleReturnDateChange = (e) => {
+    const value = e.target.value;
+    setReturnDate(value);
+    calculateDuration(pickupDate, value);
+  };
+
+  const calculateDuration = (pickup, returnD) => {
+    if (pickup && returnD) {
+      const pickupDate = new Date(pickup);
+      const returnDate = new Date(returnD);
+      const diffInTime = returnDate.getTime() - pickupDate.getTime();
+
+      const diffInDays = diffInTime / (1000 * 3600 * 24);
+      const weeks = Math.floor(diffInDays / 7);
+      const days = Math.floor(diffInDays % 7);
+
+      const remainingTimeInMs =
+        diffInTime - (weeks * 7 + days) * 24 * 3600 * 1000;
+      const hours = Math.floor(remainingTimeInMs / (1000 * 3600));
+
+      setDuration(
+        `${weeks} Week${weeks !== 1 ? "s" : ""} ${days} Day${
+          days !== 1 ? "s" : ""
+        } ${hours} Hour${hours !== 1 ? "s" : ""}`
+      );
+    }
+  };
+
   return (
-    <div className="bg-white shadow-md rounded-md p-4">
-      <h3 className="text-lg font-semibold mb-4">Reservation Details</h3>
-      <div className="mb-2">
-        <label htmlFor="reservationId" className="block font-medium mb-1">
-          Reservation ID:
-        </label>
-        <input
-          type="text"
-          id="reservationId"
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
-          disabled
-        />
+    <div className="p-4 border rounded shadow">
+      <h2 className="font-semibold mb-4">Reservation Details</h2>
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">Reservation ID</label>
+        <input type="text" className="w-full border rounded p-2" />
       </div>
-      <div className="mb-2">
-        <label htmlFor="pickupDate" className="block font-medium mb-1">
-          Pickup Date*:
-        </label>
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">Pickup Date*</label>
         <input
           type="datetime-local"
-          id="pickupDate"
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
-          required
+          className="w-full border rounded p-2"
+          value={pickupDate}
+          onChange={handlePickupDateChange}
+          placeholder="Select Date and Time"
         />
       </div>
-      <div className="mb-2">
-        <label htmlFor="returnDate" className="block font-medium mb-1">
-          Return Date*:
-        </label>
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">Return Date*</label>
         <input
           type="datetime-local"
-          id="returnDate"
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
-          required
+          className="w-full border rounded p-2"
+          value={returnDate}
+          onChange={handleReturnDateChange}
+          placeholder="Select Date and Time"
         />
       </div>
-      <div className="mb-2">
-        <label htmlFor="duration" className="block font-medium mb-1">
-          Duration:
-        </label>
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">Duration</label>
         <input
           type="text"
-          id="duration"
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
-          disabled
+          className="w-full border rounded p-2"
+          value={duration}
+          readOnly
         />
       </div>
-      <div className="mb-2">
-        <label htmlFor="discount" className="block font-medium mb-1">
-          Discount:
-        </label>
-        <input
-          type="text"
-          id="discount"
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
-        />
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">Discount</label>
+        <input type="number" className="w-full border rounded p-2" />
       </div>
     </div>
   );
