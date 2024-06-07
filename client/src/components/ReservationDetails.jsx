@@ -1,22 +1,33 @@
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setPickupDate,
+  setReturnDate,
+  setDuration,
+  setDiscount,
+} from "../features/reservation/reservationDetailsSlice";
 import React, { useState } from "react";
 
 const ReservationDetails = () => {
-  const [pickupDate, setPickupDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
-  const [duration, setDuration] = useState("");
-
+  const dispath = useDispatch();
+  const pickupDate = useSelector((state) => state.pickupDate);
+  const returnDate = useSelector((state) => state.returnDate);
+  const duration = useSelector((state) => state.duration);
+  const discount = useSelector((state) => state.discount);
   const handlePickupDateChange = (e) => {
     const value = e.target.value;
-    setPickupDate(value);
+    dispath(setPickupDate(value));
     calculateDuration(value, returnDate);
   };
 
   const handleReturnDateChange = (e) => {
     const value = e.target.value;
-    setReturnDate(value);
+    dispath(setReturnDate(value));
     calculateDuration(pickupDate, value);
   };
-
+  const handkeDiscountChange = (e) => {
+    const value = e.target.value;
+    dispath(setDiscount(value));
+  };
   const calculateDuration = (pickup, returnD) => {
     if (pickup && returnD) {
       const pickupDate = new Date(pickup);
@@ -77,7 +88,12 @@ const ReservationDetails = () => {
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1">Discount</label>
-        <input type="number" className="w-full border rounded p-2" />
+        <input
+          type="number"
+          className="w-full border rounded p-2"
+          value={discount}
+          onChange={handkeDiscountChange}
+        />
       </div>
     </div>
   );

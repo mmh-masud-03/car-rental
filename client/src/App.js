@@ -4,17 +4,19 @@ import CustomerInformation from "./components/CustomerInformation";
 import ChargesSummary from "./components/ChargesSummary";
 import VehicleInformation from "./components/VehicleInformation";
 import AdditionalCharges from "./components/AdditionalCharges";
+import { Provider } from "react-redux";
+import store from "./store";
 import Invoice from "./components/Invoice";
 import ReservationForm from "./components/ReservationForm";
 const App = () => {
   return (
-    <>
+    <Provider store={store}>
       {" "}
       <ReservationForm />
       <div className="min-h-screen bg-gray-100 p-4">
         <Invoice />
       </div>
-    </>
+    </Provider>
 
     // <div className="flex flex-col justify-between items-center w-full">
     //   <div className="flex flex-row justify-between items-center w-full px-8">
