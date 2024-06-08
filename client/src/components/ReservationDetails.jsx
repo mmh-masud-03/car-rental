@@ -2,52 +2,30 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setPickupDate,
   setReturnDate,
-  setDuration,
   setDiscount,
 } from "../features/reservation/reservationDetailsSlice";
-import React, { useState } from "react";
 
 const ReservationDetails = () => {
-  const dispath = useDispatch();
-  const pickupDate = useSelector((state) => state.pickupDate);
-  const returnDate = useSelector((state) => state.returnDate);
-  const duration = useSelector((state) => state.duration);
-  const discount = useSelector((state) => state.discount);
+  const dispatch = useDispatch();
+  const pickupDate = useSelector(
+    (state) => state.reservationDetails.pickupDate
+  );
+  const returnDate = useSelector(
+    (state) => state.reservationDetails.returnDate
+  );
+  const duration = useSelector((state) => state.reservationDetails.duration);
+  const discount = useSelector((state) => state.reservationDetails.discount);
+
   const handlePickupDateChange = (e) => {
-    const value = e.target.value;
-    dispath(setPickupDate(value));
-    calculateDuration(value, returnDate);
+    dispatch(setPickupDate(e.target.value));
   };
 
   const handleReturnDateChange = (e) => {
-    const value = e.target.value;
-    dispath(setReturnDate(value));
-    calculateDuration(pickupDate, value);
+    dispatch(setReturnDate(e.target.value));
   };
-  const handkeDiscountChange = (e) => {
-    const value = e.target.value;
-    dispath(setDiscount(value));
-  };
-  const calculateDuration = (pickup, returnD) => {
-    if (pickup && returnD) {
-      const pickupDate = new Date(pickup);
-      const returnDate = new Date(returnD);
-      const diffInTime = returnDate.getTime() - pickupDate.getTime();
 
-      const diffInDays = diffInTime / (1000 * 3600 * 24);
-      const weeks = Math.floor(diffInDays / 7);
-      const days = Math.floor(diffInDays % 7);
-
-      const remainingTimeInMs =
-        diffInTime - (weeks * 7 + days) * 24 * 3600 * 1000;
-      const hours = Math.floor(remainingTimeInMs / (1000 * 3600));
-
-      setDuration(
-        `${weeks} Week${weeks !== 1 ? "s" : ""} ${days} Day${
-          days !== 1 ? "s" : ""
-        } ${hours} Hour${hours !== 1 ? "s" : ""}`
-      );
-    }
+  const handleDiscountChange = (e) => {
+    dispatch(setDiscount(e.target.value));
   };
 
   return (
@@ -92,7 +70,7 @@ const ReservationDetails = () => {
           type="number"
           className="w-full border rounded p-2"
           value={discount}
-          onChange={handkeDiscountChange}
+          onChange={handleDiscountChange}
         />
       </div>
     </div>

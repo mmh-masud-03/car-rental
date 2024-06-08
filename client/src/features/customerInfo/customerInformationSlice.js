@@ -1,4 +1,3 @@
-// src/features/customerInformationSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 export const customerInformationSlice = createSlice({
